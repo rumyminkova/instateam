@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id 'org.springframework.boot' version '1.4.3.RELEASE'
+}
+
+group 'com.teamtreehouse'
+version '1.0-SNAPSHOT'
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    compile 'org.springframework:spring-orm:4.3.9.RELEASE'
+    compile 'org.hibernate:hibernate-core:5.2.10.Final'
+    compile 'org.apache.tomcat:tomcat-dbcp:8.0.32'
+    compile 'com.h2database:h2:1.4.195'
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>InstaTeam</title>
+    <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/app.css}" />
+    <link rel="stylesheet" th:href="@{/normalize.css}" />
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="site-header">
+            <a class="logo" th:href="@{/}">InstaTeam</a>
+            <a class="new-project button icon-left" th:href="@{/projects/add}"><i class="material-icons">add</i> New Project</a>
+        </div>
+    </div>
+</header>
+<nav>
+    <ul>
+        <li class="selected"><a th:href="@{/}">Projects</a></li>
+        <li><a th:href="@{/collaborators}">Collaborators</a></li>
+        <li><a th:href="@{/roles}">Roles</a></li>
+    </ul>
+</nav>
+
+<div th:if="${flash != null}" class="container">
+    <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>
+</div>
+
+<section>
+    <div class="container wrapper">
+        <div class="project-list single">
+            <div class="project">
+                <h2>
+                    <span class="primary" th:text="${project.name}"> text1</span>
+                </h2>
+                <p th:text="${project.description}"> text </p>
+                <span class="tag active" th:text="${project.status}">Active</span>
+            </div>
+            <div class="roles-collaborators" >
+
+                 <h3>Roles &amp; Collaborators</h3>
+                <div class="list-item" th:each="rc:${rolesCollaboratorsMap}">
+                    <span class="primary" th:text="${rc.key.name}">Developer</span>
+                    <span class="secondary" th:text="(${rc.value}!=null) ? (${rc.value.name}):'[Unassigned]'">Michael Pemulis</span>
+                </div>
+
+            </div>
+            <div class="actions">
+                <a class="button" th:href="@{'/projects/'+${project.project_id}}+'/edit'">Edit Project</a>
+                <a class="button" th:href="@{'/projects/'+${project.project_id}}+'/collaborators'">Edit Collaborators</a>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>InstaTeam</title>
+    <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/app.css}" />
+    <link rel="stylesheet" th:href="@{/normalize.css}" />
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="site-header">
+            <a class="logo" th:href="@{/}">InstaTeam</a>
+            <a class="new-project button icon-left" th:href="@{/projects/add}"><i class="material-icons">add</i> New Project</a>
+        </div>
+    </div>
+</header>
+<nav>
+    <ul>
+        <li class="selected"><a th:href="@{/}">Projects</a></li>
+        <li><a th:href="@{/collaborators}">Collaborators</a></li>
+        <li><a th:href="@{/roles}">Roles</a></li>
+    </ul>
+</nav>
+
+<div th:if="${flash != null}" class="container">
+    <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>
+</div>
+
+<section>
+    <div class="container wrapper">
+        <form th:action="@{${action}}" method="post" th:object="${project}">
+            <input type="hidden" th:field="*{project_id}"/>
+            <input type="hidden" th:field="*{name}"/>
+            <input type="hidden" th:field="*{description}"/>
+            <input type="hidden" th:field="*{status}"/>
+
+            <label th:text="'Edit Collaborators: '+ *{name}">Website Project</label>
+            <ul class="checkbox-list">
+                 <li th:each="rn:${project.rolesNeeded}">
+                    <span class="primary" th:text="${rn.name}">Developer</span>
+                      <div class="custom-select">
+                        <span class="dropdown-arrow"></span>
+                        <select th:field="*{collaborators}">
+                            <option value="" disabled="disabled">Unassigned</option>
+                            <option th:each="cl:${rn.collaboratorsForRole}" th:value="${cl.id}" th:text="${cl.name}">Technology</option>
+                        </select>
+                      </div>
+              </li>
+            </ul>
+
+           <div class="actions">
+                <input type="submit" value="Save" class="button"/>
+                <a th:href="@{'/projects/'+ ${project.project_id}+'/details'}" class="button button-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</section>
+
+</body>
+</html>

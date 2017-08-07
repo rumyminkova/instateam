@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <title>InstaTeam</title>
+    <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/app.css}" />
+    <link rel="stylesheet" th:href="@{/normalize.css}" />
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="site-header">
+            <a class="logo" th:href="@{/}">InstaTeam</a>
+            <a class="new-project button icon-left" th:href="@{/projects/add}"><i class="material-icons">add</i> New Project</a>
+        </div>
+    </div>
+</header>
+<nav>
+    <ul>
+        <li><a th:href="@{/}">Projects</a></li>
+        <li class="selected"><a th:href="@{/collaborators}">Collaborators</a></li>
+        <li><a th:href="@{/roles}">Roles</a></li>
+    </ul>
+</nav>
+
+<div th:if="${flash != null}" class="container">
+    <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>
+</div>
+<section>
+    <div class="container wrapper">
+        <form>
+            <div>
+            <h2>Manage Collaborators</h2>
+                    <ul class="checkbox-list">
+                        <li  th:each="cl : ${collaborators}">
+                            <a th:href="@{'/collaborators/'+${cl.id}}+'/edit'">
+                                <span class="primary" th:text="${cl.name}"> text1</span>
+                            </a>
+                            <span class="secondary" th:text="${cl.role==null}?'[Unassigned]':${cl.role.name}"> text1</span>
+                        </li>
+                    </ul>
+            </div>
+            <div class="actions add-new-collaborator">
+                <a class="button" href="/collaborators/add">Add</a>
+            </div>
+        </form>
+    </div>
+</section>
+</body>
+</html>
+
